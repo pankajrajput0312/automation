@@ -21,7 +21,7 @@ export function FeatureCard({
         className
       )}
     >
-      <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-900 text-white">
+      <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-500 text-white">
         <Icon className="h-6 w-6" />
       </div>
       <h3 className="mb-2 text-xl font-semibold">{title}</h3>
