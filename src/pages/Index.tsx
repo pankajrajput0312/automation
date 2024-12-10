@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
+import { HowItWorks } from "@/components/sections/HowItWorks";
 import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -95,6 +96,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <HowItWorks />
+
       {/* Testimonials Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -127,41 +131,6 @@ const Index = () => {
                   <p className="font-semibold">{testimonial.author}</p>
                   <p className="text-neutral-600">{testimonial.role}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-24 bg-neutral-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
-              Start Automating in 3 Easy Steps
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Sign Up",
-                description: "Create an account in under 2 minutes."
-              },
-              {
-                title: "Connect Your Instagram",
-                description: "Seamless integration with your profile."
-              },
-              {
-                title: "Set Up Automation",
-                description: "Customize replies, DMs, and post schedules to suit your needs."
-              }
-            ].map((step, index) => (
-              <div key={index} className="relative">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-accent-500 text-white font-bold mb-4">
-                  {index + 1}
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-neutral-600">{step.description}</p>
               </div>
             ))}
           </div>
