@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { HowItWorks } from "@/components/sections/HowItWorks";
-import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow, ArrowRight } from "lucide-react";
+import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -13,11 +13,12 @@ const Index = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-24 sm:pt-40 sm:pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="animate-fade-in mb-8">
-            Ready to Automate?
+          <Badge variant="secondary" className="animate-fade-in mb-8 text-lg py-2 px-4 font-medium bg-primary/10 text-primary">
+            <Sparkles className="w-4 h-4 mr-2 inline-block" />
+            Transform Your Social Media Game
           </Badge>
           <h1 className="animate-fade-up text-5xl sm:text-6xl lg:text-7xl font-bold text-neutral-900 mb-6 tracking-tight">
-            Start <span className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-transparent">Automating</span> with Confidence
+            Start <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">Automating</span> with Confidence
             <span className="text-accent-500">.</span>
           </h1>
           <p className="animate-fade-up animation-delay-100 text-xl text-neutral-600 mb-12 max-w-2xl mx-auto">
@@ -103,37 +104,50 @@ const Index = () => {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
+            <Badge variant="secondary" className="mb-4">Real Stories, Real Results</Badge>
             <h2 className="text-3xl font-bold text-neutral-900 mb-4">
-              Hear from Our Happy Users
+              Trusted by Social Media Professionals
             </h2>
+            <p className="text-neutral-600 max-w-2xl mx-auto">
+              Join thousands of satisfied users who have transformed their social media presence with our automation tools.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                quote: "This tool saved me hours every week! My engagement has skyrocketed!",
+                quote: "This automation tool has completely transformed how I manage my social media. My engagement rates have increased by 300% since I started using it!",
                 author: "Sarah Johnson",
-                role: "Business Owner"
+                role: "Digital Marketing Manager",
+                company: "TechStart Inc."
               },
               {
-                quote: "I love the auto-DMs feature. It's a game-changer for building relationships with followers.",
+                quote: "The auto-DM feature is brilliant! It's helped me build meaningful connections with my followers while saving hours of manual work.",
                 author: "Mike Chen",
-                role: "Influencer"
+                role: "Content Creator",
+                company: "Creative Minds"
               },
               {
-                quote: "Scheduling posts has never been easier. This tool is a must-have for any marketer!",
+                quote: "As a social media manager handling multiple accounts, this tool has been a game-changer. The scheduling features are particularly impressive.",
                 author: "Emily Rodriguez",
-                role: "Social Media Manager"
+                role: "Social Media Strategist",
+                company: "Growth Media"
               }
             ].map((testimonial, index) => (
               <div 
                 key={index} 
-                className="group p-8 bg-neutral-50 rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                className="group p-8 bg-white rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-neutral-200"
               >
                 <div className="relative">
-                  <p className="text-lg mb-6 text-neutral-700 italic">{testimonial.quote}</p>
-                  <div className="mt-4">
-                    <p className="font-semibold text-neutral-900">{testimonial.author}</p>
-                    <p className="text-neutral-600">{testimonial.role}</p>
+                  <p className="text-lg mb-6 text-neutral-700 italic leading-relaxed">{testimonial.quote}</p>
+                  <div className="mt-6 flex items-center">
+                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                      {testimonial.author.charAt(0)}
+                    </div>
+                    <div className="ml-4">
+                      <p className="font-semibold text-neutral-900">{testimonial.author}</p>
+                      <p className="text-sm text-neutral-600">{testimonial.role}</p>
+                      <p className="text-sm text-primary">{testimonial.company}</p>
+                    </div>
                   </div>
                   <div className="absolute -top-4 -left-4 text-6xl text-primary/20 font-serif">"</div>
                 </div>
@@ -144,16 +158,24 @@ const Index = () => {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 bg-neutral-900 text-white">
+      <section className="py-24 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-8">Ready to Automate?</h2>
-          <p className="text-xl mb-8 text-neutral-300">
-            Start saving time and growing your Instagram today!
+          <Badge variant="secondary" className="mb-8 bg-white/10 text-white border-none">
+            Limited Time Offer
+          </Badge>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-white via-primary-foreground to-white bg-clip-text text-transparent">
+            Ready to Transform Your Social Media?
+          </h2>
+          <p className="text-xl mb-12 text-neutral-300 max-w-2xl mx-auto">
+            Join thousands of successful businesses already using our platform. Start your 30-day free trial today!
           </p>
-          <Button size="lg" className="bg-accent-500 hover:bg-accent-600">
-            Sign Up Free
-            <ArrowRight className="ml-2" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
+              Start Your Free Trial
+              <ArrowRight className="ml-2" />
+            </Button>
+            <p className="text-sm text-neutral-400">No credit card required</p>
+          </div>
         </div>
       </section>
 
