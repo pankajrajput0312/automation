@@ -26,7 +26,7 @@ export function Layout() {
   return (
     <SidebarProvider defaultOpen={true}>
       <div>
-        <Sidebar>
+        <Sidebar children={''}>
           {/* Sidebar content goes here */}
         </Sidebar>
         <Calendar
@@ -34,12 +34,6 @@ export function Layout() {
           currentDate={currentDate}
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
-          posts={posts}
-          onPostSelect={handlePostSelect}
-          onPostUpdate={handlePostUpdate}
-          onPostDelete={handlePostDelete}
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
         />
       </div>
     </SidebarProvider>
