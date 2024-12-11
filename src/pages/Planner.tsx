@@ -4,12 +4,13 @@ import { ViewToggle } from "@/components/planner/ViewToggle";
 import { ListView } from "@/components/planner/ListView";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, LayoutDashboard, Calendar as CalendarIcon, Settings, Users } from "lucide-react";
+import { ChevronLeft, ChevronRight, LayoutDashboard, Calendar as CalendarIcon, Settings, Users, Plus } from "lucide-react";
 import { getDummyPosts, Post } from "@/lib/dummy-data";
 import { PostModal } from "@/components/planner/PostModal";
 import { Sidebar, SidebarItem, SidebarProvider } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { SchedulePostModal } from "@/components/planner/SchedulePostModal";
 
 export default function Planner() {
   const [view, setView] = useState<"week" | "month" | "list">("month");
@@ -17,6 +18,7 @@ export default function Planner() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const { isOpen, isMobile } = useSidebar();
+  const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
 
   // Handle navigation between periods
   const handlePreviousPeriod = () => {
@@ -59,6 +61,11 @@ export default function Planner() {
     return allPosts;
   }, [currentDate]);
 
+  const handleSchedulePost = (postData: any) => {
+    console.log('Schedule post:', postData);
+    // Handle post scheduling logic here
+  };
+
   return (
     <div className="flex min-h-screen">
       <Sidebar>
@@ -88,7 +95,13 @@ export default function Planner() {
         <div className="container mx-auto py-4 space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <h1 className="text-2xl font-bold">Content Planner</h1>
-            <ViewToggle view={view} onViewChange={setView} />
+            <div className="flex items-center gap-4">
+              <Button onClick={() => setScheduleModalOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                Schedule Post
+              </Button>
+              <ViewToggle view={view} onViewChange={setView} />
+            </div>
           </div>
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -141,6 +154,12 @@ export default function Planner() {
               }}
             />
           )}
+
+          <SchedulePostModal
+            open={scheduleModalOpen}
+            onClose={() => setScheduleModalOpen(false)}
+            onSchedule={handleSchedulePost}
+          />
         </div>
       </main>
     </div>
