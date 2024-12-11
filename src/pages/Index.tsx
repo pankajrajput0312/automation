@@ -4,6 +4,7 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { Footer } from "@/components/sections/Footer";
 import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow } from "lucide-react";
 
 const Index = () => {
@@ -93,6 +94,8 @@ const Index = () => {
       <HowItWorks />
       <TestimonialsSection />
       <FinalCTA />
+
+      <Footer />
     </div>
   );
 };
