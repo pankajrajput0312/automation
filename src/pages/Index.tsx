@@ -1,38 +1,17 @@
 import { Navigation } from "@/components/Navigation";
 import { FeatureCard } from "@/components/FeatureCard";
 import { HowItWorks } from "@/components/sections/HowItWorks";
-import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow, ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { FinalCTA } from "@/components/sections/FinalCTA";
+import { MessageSquare, Send, Calendar, Clock, Zap, Users, Workflow } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-neutral-50">
       <Navigation />
+      <HeroSection />
       
-      {/* Hero Section */}
-      <section className="pt-32 pb-24 sm:pt-40 sm:pb-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="animate-fade-in mb-8 text-lg py-2 px-4 font-medium bg-primary/10 text-primary">
-            <Sparkles className="w-4 h-4 mr-2 inline-block" />
-            Transform Your Social Media Game
-          </Badge>
-          <h1 className="animate-fade-up text-5xl sm:text-6xl lg:text-7xl font-bold text-neutral-900 mb-6 tracking-tight">
-            Start <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">Automating</span> with Confidence
-            <span className="text-accent-500">.</span>
-          </h1>
-          <p className="animate-fade-up animation-delay-100 text-xl text-neutral-600 mb-12 max-w-2xl mx-auto">
-            Experience the power of social media automation risk-free. Sign up today and enjoy all premium features for 30 days at no cost.
-          </p>
-          <div className="animate-fade-up animation-delay-200 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
-              Start My Free Trial
-              <ArrowRight className="ml-2" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section id="features" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,145 +52,47 @@ const Index = () => {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <Clock className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
-              <h3 className="text-xl font-semibold mb-2">Save Time</h3>
-              <p className="text-neutral-600">Automate repetitive tasks and focus on creating content.</p>
-            </div>
-            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <Zap className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
-              <h3 className="text-xl font-semibold mb-2">Boost Engagement</h3>
-              <p className="text-neutral-600">Never miss a comment or DM opportunity.</p>
-            </div>
-            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <Users className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
-              <h3 className="text-xl font-semibold mb-2">Increase Reach</h3>
-              <p className="text-neutral-600">Consistently publish content to stay top-of-mind with your audience.</p>
-            </div>
-            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <Workflow className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
-              <h3 className="text-xl font-semibold mb-2">Streamline Workflow</h3>
-              <p className="text-neutral-600">Manage Instagram activities seamlessly from one platform.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <HowItWorks />
-
-      {/* Testimonials Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Real Stories, Real Results</Badge>
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">
-              Trusted by Social Media Professionals
-            </h2>
-            <p className="text-neutral-600 max-w-2xl mx-auto">
-              Join thousands of satisfied users who have transformed their social media presence with our automation tools.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                quote: "This automation tool has completely transformed how I manage my social media. My engagement rates have increased by 300% since I started using it!",
-                author: "Sarah Johnson",
-                role: "Digital Marketing Manager",
-                company: "TechStart Inc."
+                icon: Clock,
+                title: "Save Time",
+                description: "Automate repetitive tasks and focus on creating content."
               },
               {
-                quote: "The auto-DM feature is brilliant! It's helped me build meaningful connections with my followers while saving hours of manual work.",
-                author: "Mike Chen",
-                role: "Content Creator",
-                company: "Creative Minds"
+                icon: Zap,
+                title: "Boost Engagement",
+                description: "Never miss a comment or DM opportunity."
               },
               {
-                quote: "As a social media manager handling multiple accounts, this tool has been a game-changer. The scheduling features are particularly impressive.",
-                author: "Emily Rodriguez",
-                role: "Social Media Strategist",
-                company: "Growth Media"
+                icon: Users,
+                title: "Increase Reach",
+                description: "Consistently publish content to stay top-of-mind with your audience."
+              },
+              {
+                icon: Workflow,
+                title: "Streamline Workflow",
+                description: "Manage Instagram activities seamlessly from one platform."
               }
-            ].map((testimonial, index) => (
-              <div 
-                key={index} 
-                className="group p-8 bg-white rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-neutral-200"
-              >
-                <div className="relative">
-                  <p className="text-lg mb-6 text-neutral-700 italic leading-relaxed">{testimonial.quote}</p>
-                  <div className="mt-6 flex items-center">
-                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                      {testimonial.author.charAt(0)}
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-semibold text-neutral-900">{testimonial.author}</p>
-                      <p className="text-sm text-neutral-600">{testimonial.role}</p>
-                      <p className="text-sm text-primary">{testimonial.company}</p>
-                    </div>
-                  </div>
-                  <div className="absolute -top-4 -left-4 text-6xl text-primary/20 font-serif">"</div>
+            ].map((benefit, index) => {
+              const Icon = benefit.icon;
+              return (
+                <div 
+                  key={index}
+                  className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-primary/5 hover:to-transparent"
+                >
+                  <Icon className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
+                  <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+                  <p className="text-neutral-600">{benefit.description}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="mb-8 bg-white/10 text-white border-none">
-            Limited Time Offer
-          </Badge>
-          <h2 className="text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-white via-primary-foreground to-white bg-clip-text text-transparent">
-            Ready to Transform Your Social Media?
-          </h2>
-          <p className="text-xl mb-12 text-neutral-300 max-w-2xl mx-auto">
-            Join thousands of successful businesses already using our platform. Start your 30-day free trial today!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
-              Start Your Free Trial
-              <ArrowRight className="ml-2" />
-            </Button>
-            <p className="text-sm text-neutral-400">No credit card required</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 bg-neutral-900 text-white border-t border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contact</h3>
-              <p className="text-neutral-400">support@yourdomain.com</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-              <div className="flex space-x-4">
-                <a href="#" className="text-neutral-400 hover:text-white">Twitter</a>
-                <a href="#" className="text-neutral-400 hover:text-white">Instagram</a>
-                <a href="#" className="text-neutral-400 hover:text-white">LinkedIn</a>
-              </div>
-            </div>
-            <div className="lg:col-span-2">
-              <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
-              <p className="text-neutral-400 mb-4">
-                Subscribe to get the latest updates and tips on social media automation.
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white"
-                />
-                <Button variant="secondary">Subscribe</Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <HowItWorks />
+      <TestimonialsSection />
+      <FinalCTA />
     </div>
   );
 };
