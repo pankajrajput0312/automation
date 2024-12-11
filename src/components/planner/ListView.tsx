@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit2, Image as ImageIcon } from "lucide-react";
+import { Edit2 } from "lucide-react";
 
 interface ListViewProps {
   posts: Post[];
