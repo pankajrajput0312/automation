@@ -101,13 +101,17 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
               >
                 <div className="flex justify-between items-center sticky top-0 bg-background p-2 border-b">
                   <span className="font-medium">{format(date, 'd')}</span>
-                  <Badge variant="secondary">
+                  <Badge 
+                    variant="secondary"
+                    className="cursor-pointer hover:bg-primary/20"
+                    onClick={() => setSelectedDatePosts({ date, posts: datePosts })}
+                  >
                     {datePosts.length} {datePosts.length === 1 ? 'post' : 'posts'}
                   </Badge>
                 </div>
                 <ScrollArea className="h-[calc(100%-3rem)]">
                   <div className="space-y-1 p-1">
-                    {datePosts.map((post) => (
+                    {datePosts.slice(0, 3).map((post) => (
                       <button
                         key={post.id}
                         onClick={() => setSelectedPost(post)}
@@ -140,6 +144,14 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                         </div>
                       </button>
                     ))}
+                    {datePosts.length > 3 && (
+                      <div 
+                        className="text-xs text-muted-foreground text-center cursor-pointer hover:text-primary"
+                        onClick={() => setSelectedDatePosts({ date, posts: datePosts })}
+                      >
+                        +{datePosts.length - 3} more {datePosts.length - 3 === 1 ? 'post' : 'posts'}
+                      </div>
+                    )}
                   </div>
                 </ScrollArea>
               </div>

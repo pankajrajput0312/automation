@@ -2,7 +2,7 @@ import { Post } from "@/lib/dummy-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { X, Trash2 } from "lucide-react";
+import { X, Trash2, Edit2 } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -39,8 +39,7 @@ export function PostModal({
             {posts.map((post) => (
               <div
                 key={post.id}
-                className="p-4 border rounded-lg cursor-pointer hover:bg-accent"
-                onClick={() => onSelectPost?.(post)}
+                className="p-4 border rounded-lg hover:bg-accent/50 group relative transition-colors"
               >
                 <div className="flex items-center gap-4">
                   {post.image && (
@@ -58,6 +57,35 @@ export function PostModal({
                       {format(post.scheduledTime, 'h:mm a')}
                     </p>
                     <p className="text-sm line-clamp-2 mt-1">{post.content}</p>
+                  </div>
+                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-3 hover:bg-primary hover:text-primary-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSelectPost?.(post);
+                      }}
+                    >
+                      <Edit2 className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-3 hover:bg-destructive hover:text-destructive-foreground"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (confirm('Are you sure you want to delete this post?')) {
+                          onDelete?.(post.id);
+                          onClose();
+                        }
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete
+                    </Button>
                   </div>
                 </div>
               </div>
