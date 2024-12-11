@@ -17,14 +17,14 @@ const Index = () => {
             Ready to Automate?
           </Badge>
           <h1 className="animate-fade-up text-5xl sm:text-6xl lg:text-7xl font-bold text-neutral-900 mb-6 tracking-tight">
-            Start Automating with Confidence
+            Start <span className="bg-gradient-to-r from-primary/80 to-primary bg-clip-text text-transparent">Automating</span> with Confidence
             <span className="text-accent-500">.</span>
           </h1>
           <p className="animate-fade-up animation-delay-100 text-xl text-neutral-600 mb-12 max-w-2xl mx-auto">
             Experience the power of social media automation risk-free. Sign up today and enjoy all premium features for 30 days at no cost.
           </p>
           <div className="animate-fade-up animation-delay-200 flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-neutral-900 hover:bg-neutral-800">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
               Start My Free Trial
               <ArrowRight className="ml-2" />
             </Button>
@@ -72,23 +72,23 @@ const Index = () => {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="p-6 bg-white rounded-2xl shadow-sm">
-              <Clock className="w-12 h-12 mb-4 text-accent-500" />
+            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Clock className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
               <h3 className="text-xl font-semibold mb-2">Save Time</h3>
               <p className="text-neutral-600">Automate repetitive tasks and focus on creating content.</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm">
-              <Zap className="w-12 h-12 mb-4 text-accent-500" />
+            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Zap className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
               <h3 className="text-xl font-semibold mb-2">Boost Engagement</h3>
               <p className="text-neutral-600">Never miss a comment or DM opportunity.</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm">
-              <Users className="w-12 h-12 mb-4 text-accent-500" />
+            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Users className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
               <h3 className="text-xl font-semibold mb-2">Increase Reach</h3>
               <p className="text-neutral-600">Consistently publish content to stay top-of-mind with your audience.</p>
             </div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm">
-              <Workflow className="w-12 h-12 mb-4 text-accent-500" />
+            <div className="group p-6 bg-white rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Workflow className="w-12 h-12 mb-4 text-primary transition-colors duration-300 group-hover:scale-110" />
               <h3 className="text-xl font-semibold mb-2">Streamline Workflow</h3>
               <p className="text-neutral-600">Manage Instagram activities seamlessly from one platform.</p>
             </div>
@@ -107,7 +107,7 @@ const Index = () => {
               Hear from Our Happy Users
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 quote: "This tool saved me hours every week! My engagement has skyrocketed!",
@@ -125,11 +125,17 @@ const Index = () => {
                 role: "Social Media Manager"
               }
             ].map((testimonial, index) => (
-              <div key={index} className="p-8 bg-neutral-50 rounded-2xl">
-                <p className="text-lg mb-4 text-neutral-700">{testimonial.quote}</p>
-                <div>
-                  <p className="font-semibold">{testimonial.author}</p>
-                  <p className="text-neutral-600">{testimonial.role}</p>
+              <div 
+                key={index} 
+                className="group p-8 bg-neutral-50 rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="relative">
+                  <p className="text-lg mb-6 text-neutral-700 italic">{testimonial.quote}</p>
+                  <div className="mt-4">
+                    <p className="font-semibold text-neutral-900">{testimonial.author}</p>
+                    <p className="text-neutral-600">{testimonial.role}</p>
+                  </div>
+                  <div className="absolute -top-4 -left-4 text-6xl text-primary/20 font-serif">"</div>
                 </div>
               </div>
             ))}
