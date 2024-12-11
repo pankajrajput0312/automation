@@ -16,6 +16,7 @@ interface CalendarProps {
 export function Calendar({ view, currentDate, selectedDate, onSelectDate }: CalendarProps) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Record<string, Post[]>>({});
+  const [selectedDatePosts, setSelectedDatePosts] = useState<{ date: Date; posts: Post[] } | null>(null);
 
   // Generate calendar dates based on view
   const dates = useMemo(() => {
@@ -70,7 +71,10 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
     <>
       <div className={cn(
         "grid gap-1",
-        view === "week" ? "grid-cols-7 h-[calc(100vh-12rem)]" : "grid-cols-7 h-[calc(100vh-12rem)]"
+        view === "week" 
+          ? "grid-cols-7 h-[calc(100vh-12rem)]" 
+          : "grid-cols-7 h-[calc(100vh-12rem)]",
+        "transition-all duration-300"
       )}>
         {/* Weekday headers */}
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
@@ -148,10 +152,10 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
               key={dateKey}
               onClick={() => onSelectDate(date)}
               className={cn(
-                "min-h-[120px] border rounded-lg p-1 transition-colors",
+                "min-h-[120px] border rounded-lg p-1",
                 !isCurrentMonth && "bg-muted/50",
                 isSelected && "ring-2 ring-primary",
-                "hover:bg-accent cursor-pointer"
+                "hover:bg-muted/30 cursor-pointer"
               )}
             >
               <div className="flex justify-between items-center mb-1">
@@ -162,7 +166,14 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                   {format(date, 'd')}
                 </span>
                 {datePosts.length > 0 && (
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge 
+                    variant="secondary" 
+                    className="text-xs cursor-pointer hover:bg-primary/20"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDatePosts({ date, posts: datePosts });
+                    }}
+                  >
                     {datePosts.length} {datePosts.length === 1 ? 'post' : 'posts'}
                   </Badge>
                 )}
@@ -171,13 +182,19 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
               <ScrollArea className="h-[calc(100%-2rem)]">
                 <div className="space-y-1">
                   {datePosts.slice(0, 3).map((post) => (
-                    <button
+                    <div
                       key={post.id}
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedPost(post);
                       }}
-                      className="w-full text-left rounded p-1 text-xs hover:bg-accent/50 transition-colors"
+                      className={cn(
+                        "w-full text-left rounded p-1 text-xs",
+                        "hover:bg-primary/10 hover:shadow-sm",
+                        "transition-all duration-200",
+                        "hover:border hover:border-primary/20",
+                        "cursor-pointer"
+                      )}
                     >
                       <div className="flex items-center gap-1">
                         {post.image && (
@@ -196,7 +213,7 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                           </div>
                         </div>
                       </div>
-                    </button>
+                    </div>
                   ))}
                   {datePosts.length > 3 && (
                     <div className="text-xs text-muted-foreground text-center">
@@ -209,6 +226,20 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
           );
         })}
       </div>
+
+      {selectedDatePosts && (
+        <PostModal
+          post={null}
+          onClose={() => setSelectedDatePosts(null)}
+          isDateView={true}
+          date={selectedDatePosts.date}
+          posts={selectedDatePosts.posts}
+          onSelectPost={(post) => {
+            setSelectedPost(post);
+            setSelectedDatePosts(null);
+          }}
+        />
+      )}
 
       {selectedPost && (
         <PostModal
