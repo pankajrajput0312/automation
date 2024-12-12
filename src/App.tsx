@@ -7,6 +7,7 @@ import { Toaster } from './components/ui/toaster';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 // Pages
 import Index from './pages/Index';
@@ -28,7 +29,9 @@ function AuthRoute({ children }: { children: React.ReactNode }) {
 function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      {children}
+      <DashboardLayout>
+        {children}
+      </DashboardLayout>
     </SidebarProvider>
   );
 }
