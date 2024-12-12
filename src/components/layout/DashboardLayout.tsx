@@ -1,9 +1,22 @@
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, Calendar, Users, Settings, ChevronLeft } from "lucide-react";
+import { LayoutDashboard, Calendar, Users, Settings, ChevronLeft, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logout } from '@/store/features/auth/authSlice';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -21,6 +34,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const { isOpen, isMobile, toggle } = useSidebar();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
 
   const sidebarItems = [
     {
@@ -48,7 +68,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex min-h-screen">
       <Sidebar>
-        <div className="px-3 py-2">
+        <div className="flex flex-col h-full px-3 py-2">
           <div className="flex items-center justify-between mb-4 px-2">
             <div className="flex items-center gap-2">
               <Logo className={cn(!isOpen && "mx-auto")} />
@@ -67,7 +87,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </button>
             )}
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 flex-1">
             {sidebarItems.map((item) => (
               <div
                 key={item.href}
@@ -83,6 +103,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
             ))}
           </div>
+          <div className="border-t border-border mt-4 pt-4">
+            <div
+              onClick={() => setShowLogoutConfirm(true)}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-destructive/10 hover:text-destructive cursor-pointer",
+                !isOpen && "justify-center"
+              )}
+            >
+              <LogOut className="h-5 w-5" />
+              {isOpen && <span>Logout</span>}
+            </div>
+          </div>
         </div>
       </Sidebar>
       
@@ -96,6 +128,26 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="fixed bottom-4 right-4">
         <ThemeToggle />
       </div>
+
+      <AlertDialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to logout? You'll need to login again to access your account.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleLogout}
+              className="bg-destructive hover:bg-destructive/90"
+            >
+              Logout
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
