@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Instagram, Youtube, X, Facebook, Linkedin, Trash2 } from "lucide-react";
 import { TiktokIcon } from "@/components/icons/TiktokIcon";
 import { cn } from "@/lib/utils";
+import { socialConnect } from "@/services/social-connect";
 
 interface SocialPlatform {
   id: string;
@@ -80,8 +81,11 @@ const socialPlatforms: SocialPlatform[] = [
 
 export function ConnectSocialPage() {
   const handleConnect = (platformId: string) => {
-    console.log('Connecting to:', platformId);
-    // Implement connection logic
+    if (platformId === 'instagram') {
+      socialConnect.instagram();
+    } else {
+      console.log('Connecting to:', platformId);
+    }
   };
 
   const handleDisconnect = (platformId: string, accountId: string) => {
