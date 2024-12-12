@@ -15,6 +15,7 @@ import { LoginPage } from './pages/auth/Login';
 import { SignUpPage } from './pages/auth/SignUp';
 import { DashboardPage } from './pages/Dashboard';
 import PlannerPage from './pages/Planner';
+import { ConnectSocialPage } from './pages/ConnectSocial';
 
 function AuthRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -67,6 +68,13 @@ function App() {
               <ProtectedRoute>
                 <AppLayout>
                   <PlannerPage />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/connect-social" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <ConnectSocialPage />
                 </AppLayout>
               </ProtectedRoute>
             } />

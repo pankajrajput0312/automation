@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, Calendar, Users, Settings, ChevronLeft, LogOut } from "lucide-react";
+import { LayoutDashboard, Calendar, Users, Settings, ChevronLeft, LogOut, Link } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -52,6 +52,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       icon: <Calendar className="h-5 w-5" />,
       title: "Planner",
       href: "/planner"
+    },
+    {
+      icon: <Link className="h-5 w-5" />,
+      title: "Connect Social",
+      href: "/connect-social"
     },
     {
       icon: <Users className="h-5 w-5" />,
