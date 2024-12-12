@@ -11,6 +11,7 @@ import { Sidebar, SidebarItem, SidebarProvider } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { SchedulePostModal } from "@/components/planner/SchedulePostModal";
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Planner() {
   const [view, setView] = useState<"week" | "month" | "list">("month");
@@ -162,6 +163,7 @@ export default function Planner() {
           />
         </div>
       </main>
+      <ThemeToggle />
     </div>
   );
 } 

@@ -115,7 +115,12 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                       <button
                         key={post.id}
                         onClick={() => setSelectedPost(post)}
-                        className="w-full text-left border rounded-lg p-2 space-y-1 bg-card hover:bg-accent transition-colors"
+                        className={cn(
+                          "w-full text-left rounded-lg p-2 space-y-1",
+                          "bg-card hover:bg-primary hover:text-primary-foreground",
+                          "transition-colors duration-200",
+                          "group"
+                        )}
                       >
                         {post.image && (
                           <div className="aspect-video rounded-md overflow-hidden mb-2">
@@ -128,16 +133,20 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                         )}
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium">{post.title}</span>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs group-hover:text-primary-foreground/80">
                             {format(post.scheduledTime, 'h:mm a')}
                           </span>
                         </div>
-                        <p className="text-xs text-muted-foreground line-clamp-2">
+                        <p className="text-xs group-hover:text-primary-foreground/80 line-clamp-2">
                           {post.content}
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {post.tags.map((tag) => (
-                            <Badge key={tag} variant="outline" className="text-xs">
+                            <Badge 
+                              key={tag} 
+                              variant="outline" 
+                              className="text-xs group-hover:border-primary-foreground/20 group-hover:text-primary-foreground"
+                            >
                               {tag}
                             </Badge>
                           ))}
@@ -202,10 +211,9 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                       }}
                       className={cn(
                         "w-full text-left rounded p-1 text-xs",
-                        "hover:bg-primary/10 hover:shadow-sm",
-                        "transition-all duration-200",
-                        "hover:border hover:border-primary/20",
-                        "cursor-pointer"
+                        "hover:bg-primary hover:text-primary-foreground",
+                        "transition-colors duration-200",
+                        "cursor-pointer group"
                       )}
                     >
                       <div className="flex items-center gap-1">
@@ -220,7 +228,7 @@ export function Calendar({ view, currentDate, selectedDate, onSelectDate }: Cale
                         )}
                         <div className="overflow-hidden">
                           <div className="font-medium truncate">{post.title}</div>
-                          <div className="text-muted-foreground">
+                          <div className="group-hover:text-primary-foreground/80">
                             {format(post.scheduledTime, 'h:mm a')}
                           </div>
                         </div>
