@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle"
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '@/store/store';
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,10 +66,17 @@ export function Navigation() {
               >
                 Testimonials
               </a>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                Get Started
+              <Button 
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => navigate(isAuthenticated ? '/dashboard' : '/login')}
+              >
+                {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
               </Button>
             </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
           </div>
         </div>
 
@@ -87,8 +100,11 @@ export function Navigation() {
             >
               Testimonials
             </a>
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-2">
-              Get Started
+            <Button 
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 mt-2"
+              onClick={() => navigate(isAuthenticated ? '/dashboard' : '/login')}
+            >
+              {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
             </Button>
           </div>
         </div>

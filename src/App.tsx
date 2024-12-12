@@ -1,38 +1,81 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { ThemeProvider } from "./components/theme-provider";
-import Index from "./pages/Index";
-import Planner from "./pages/Planner";
-import { LoginPage } from "./pages/auth/Login";
-import { SignUpPage } from "./pages/auth/SignUp";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { ThemeProvider } from './components/theme-provider';
+import { Toaster } from './components/ui/toaster';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
-const queryClient = new QueryClient();
+// Pages
+import Index from './pages/Index';
+import { LoginPage } from './pages/auth/Login';
+import { SignUpPage } from './pages/auth/SignUp';
+import { DashboardPage } from './pages/Dashboard';
+import PlannerPage from './pages/Planner';
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="light">
-      <div className="min-h-screen">
-        <TooltipProvider>
-          <SidebarProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/planner" element={<Planner />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-              </Routes>
-            </BrowserRouter>
-          </SidebarProvider>
-        </TooltipProvider>
-      </div>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+function AuthRoute({ children }: { children: React.ReactNode }) {
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      {children}
+    </SidebarProvider>
+  );
+}
+
+function App() {
+  return (
+    <Provider store={store}>
+      <ThemeProvider defaultTheme="dark">
+        <Router>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={
+              <AuthRoute>
+                <LoginPage />
+              </AuthRoute>
+            } />
+            <Route path="/signup" element={
+              <AuthRoute>
+                <SignUpPage />
+              </AuthRoute>
+            } />
+
+            {/* Protected Routes */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <DashboardPage />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/planner" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <PlannerPage />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+
+            {/* Catch all route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+        <Toaster />
+      </ThemeProvider>
+    </Provider>
+  );
+}
 
 export default App;

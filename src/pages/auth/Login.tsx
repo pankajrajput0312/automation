@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,9 +10,12 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { PasswordInput } from "@/components/ui/password-input";
 import { authApi } from "@/lib/api/auth";
 import type { LoginFormData } from "@/types/auth";
+import { login } from '@/store/features/auth/authSlice';
 
 export function LoginPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
@@ -28,13 +32,19 @@ export function LoginPage() {
       const response = await authApi.login(formData);
       
       if (response.success && response.data) {
-        // Store token and redirect
-        localStorage.setItem("token", response.data.token);
+        dispatch(login({
+          token: response.data.token,
+          user: response.data.user
+        }));
+        
+        // Redirect to the page they tried to visit or dashboard
+        const from = (location.state as any)?.from?.pathname || "/dashboard";
+        navigate(from, { replace: true });
+        
         toast({
           title: "Success",
           description: "Logged in successfully",
         });
-        navigate("/dashboard");
       } else {
         toast({
           variant: "destructive",

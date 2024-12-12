@@ -1,8 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 export function HeroSection() {
+  const navigate = useNavigate();
+
   return (
     <section className="min-h-screen flex items-center pt-16 pb-24 sm:pt-24 sm:pb-32 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
@@ -19,7 +22,11 @@ export function HeroSection() {
           Experience the power of social media automation risk-free. Sign up today and enjoy all premium features for 30 days at no cost.
         </p>
         <div className="animate-fade-up animation-delay-200 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6">
+          <Button 
+            size="lg" 
+            className="bg-primary hover:bg-primary/90 text-lg px-8 py-6"
+            onClick={() => navigate('/login')}
+          >
             Start My Free Trial
             <ArrowRight className="ml-2" />
           </Button>

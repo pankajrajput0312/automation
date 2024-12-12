@@ -95,7 +95,7 @@ export default function Planner() {
       )}>
         <div className="container mx-auto py-4 space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <h1 className="text-2xl font-bold">Content Planner</h1>
+            <h1 className="text-4xl font-bold text-primary mb-2">Content Planner</h1>
             <div className="flex items-center gap-4">
               <Button onClick={() => setScheduleModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
