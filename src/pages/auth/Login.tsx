@@ -54,16 +54,28 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <div className="w-full max-w-md space-y-8 p-8 bg-card rounded-lg shadow-lg">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold">Welcome back</h2>
-          <p className="text-muted-foreground mt-2">
-            Sign in to your account
+
+      <div className="mb-8 text-center">
+        <h1 className="text-4xl font-bold text-primary mb-2">Social Automator</h1>
+        <p className="text-muted-foreground">Plan your content, automate smartly</p>
+      </div>
+
+      <div className="w-full max-w-md space-y-8 p-8 bg-card rounded-xl shadow-lg border">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl font-semibold tracking-tight">Welcome back</h2>
+          <p className="text-muted-foreground">
+            Sign in to your account to continue
           </p>
+        </div>
+
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -139,6 +151,13 @@ export function LoginPage() {
           </p>
         </form>
       </div>
+
+      <p className="mt-8 text-center text-sm text-muted-foreground">
+        By continuing, you agree to our{" "}
+        <a href="#" className="text-primary hover:underline">Terms of Service</a>
+        {" "}and{" "}
+        <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+      </p>
     </div>
   );
 } 
