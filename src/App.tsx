@@ -7,6 +7,8 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import Index from "./pages/Index";
 import Planner from "./pages/Planner";
+import { LoginPage } from "./pages/auth/Login";
+import { SignUpPage } from "./pages/auth/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/planner" element={<Planner />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
               </Routes>
             </BrowserRouter>
           </SidebarProvider>

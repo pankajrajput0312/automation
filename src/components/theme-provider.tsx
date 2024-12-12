@@ -20,7 +20,11 @@ export function ThemeProvider({
   children,
   defaultTheme = "system",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme)
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Try to get the saved theme from localStorage
+    const savedTheme = localStorage.getItem("ui-theme") as Theme
+    return savedTheme || defaultTheme
+  })
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -38,8 +42,16 @@ export function ThemeProvider({
     root.classList.add(theme)
   }, [theme])
 
+  const value = {
+    theme,
+    setTheme: (theme: Theme) => {
+      localStorage.setItem("ui-theme", theme)
+      setTheme(theme)
+    },
+  }
+
   return (
-    <ThemeProviderContext.Provider value={{ theme, setTheme }}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   )
