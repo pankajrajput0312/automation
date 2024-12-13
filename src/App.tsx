@@ -16,6 +16,7 @@ import { SignUpPage } from './pages/auth/SignUp';
 import { DashboardPage } from './pages/Dashboard';
 import PlannerPage from './pages/Planner';
 import { ConnectSocialPage } from './pages/ConnectSocial';
+import { InstagramRedirect } from './pages/auth/InstagramRedirect';
 
 function AuthRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -76,6 +77,11 @@ function App() {
                 <AppLayout>
                   <ConnectSocialPage />
                 </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/instagram/redirect" element={
+              <ProtectedRoute>
+                <InstagramRedirect />
               </ProtectedRoute>
             } />
 
