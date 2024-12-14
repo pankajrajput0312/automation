@@ -30,6 +30,7 @@ WORKDIR /usr/src/app
 # Copy built files
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package.json .
+COPY --from=builder /usr/src/app/node_modules/vite ./node_modules/vite
 
 RUN npm install --production
 
