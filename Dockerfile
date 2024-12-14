@@ -16,6 +16,8 @@ COPY tailwind.config.ts .
 COPY index.html .
 COPY public/ ./public/
 COPY src/ ./src/
+COPY tsconfig.app.json .
+COPY tsconfig.node.json .
 
 # Build the application
 RUN npm run build
@@ -31,7 +33,7 @@ COPY --from=builder /usr/src/app/package.json .
 
 RUN npm install --production
 
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=4173
+EXPOSE 4173
 
 CMD ["npm", "run", "preview"]
