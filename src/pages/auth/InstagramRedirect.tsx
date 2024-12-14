@@ -13,6 +13,7 @@ export function InstagramRedirect() {
     const code = searchParams.get('code');
 
     const handleInstagramRedirect = async () => {
+      console.log("code", code);
       if (!code) {
         toast({
           variant: "destructive",
@@ -26,7 +27,7 @@ export function InstagramRedirect() {
       try {
         const response = await fetch(`https://automation.getmentore.com/api/exchangeToken?code=${code}`);
         const data = await response.json();
-
+        console.log(data);
         if (data.error) {
           toast({
             variant: "destructive",
