@@ -21,8 +21,8 @@ export const socialConnect = {
   },
 
   instagram: () => {
-    const clientId = import.meta.env.VITE_INSTAGRAM_CLIENT_ID;
-    const redirectUri = import.meta.env.VITE_INSTAGRAM_REDIRECT_URI;
+    const clientId = "562016932840227" //import.meta.env.VITE_INSTAGRAM_CLIENT_ID;
+    const redirectUri = "https://automation.getmentore.com/auth/redirect/"//import.meta.env.VITE_INSTAGRAM_REDIRECT_URI;
 
     if (!clientId || !redirectUri) {
       console.error('Instagram client ID or redirect URI is not configured');
