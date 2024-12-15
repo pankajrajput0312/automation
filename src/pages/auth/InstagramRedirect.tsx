@@ -43,7 +43,7 @@ export function InstagramRedirect() {
 
         const data = await response.json();
         
-        if (data.error || !response.ok) {
+        if (data.error || response.status !== 200) {
           toast({
             variant: "destructive",
             title: "Error",
@@ -55,7 +55,7 @@ export function InstagramRedirect() {
             description: "Successfully connected to Instagram!"
           });
         }
-        // navigate('/connect-social');
+        navigate('/connect-social');
       } catch (error) {
         console.error('Connection error:', error);
         toast({
@@ -63,7 +63,7 @@ export function InstagramRedirect() {
           title: "Error",
           description: "Failed to connect. Please try again."
         });
-        // navigate('/connect-social');
+        navigate('/connect-social');
       } finally {
         setIsLoading(false);
       }
