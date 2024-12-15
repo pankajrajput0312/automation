@@ -11,9 +11,8 @@ export function InstagramRedirect() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
-
+    
     const handleInstagramRedirect = async () => {
-      console.log("code", code);
       if (!code) {
         toast({
           variant: "destructive",
@@ -25,30 +24,43 @@ export function InstagramRedirect() {
       }
 
       try {
-        const response = await fetch(`https://automation.getmentore.com/api/exchangeToken?code=${code}`);
+        console.log("fetching", code);
+        const response = await fetch('https://automationapi.getmentore.com/social/instagram/create', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            token: code
+          })
+        });
+
         const data = await response.json();
-        console.log(data);
-        if (data.error) {
+        
+        if (data.error || !response.ok) {
           toast({
             variant: "destructive",
             title: "Error",
-            description: "Social not connected. Please try again."
+            description: data.message || "Social not connected. Please try again."
           });
-          navigate('/connect-social');
         } else {
           toast({
             title: "Success",
             description: "Successfully connected to Instagram!"
           });
-          navigate('/connect-social');
         }
+        // navigate('/connect-social');
       } catch (error) {
+        console.error('Connection error:', error);
         toast({
           variant: "destructive",
           title: "Error",
-          description: "Social not connected. Please try again."
+          description: "Failed to connect. Please try again."
         });
-        navigate('/connect-social');
+        // navigate('/connect-social');
       } finally {
         setIsLoading(false);
       }
