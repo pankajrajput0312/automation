@@ -16,11 +16,18 @@ export interface AuthResponse {
   success: boolean;
   message: string;
   data?: {
-    token: string;
+    jwt: string;
     user: {
       id: string;
       name: string;
       email: string;
     };
   };
+}
+
+export interface TokenPayload {
+  exp: number;
+  iat: number;
+  userId: string;
+  // Add other token payload fields as needed
 } 

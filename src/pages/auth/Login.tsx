@@ -33,7 +33,7 @@ export function LoginPage() {
       
       if (response.success && response.data) {
         dispatch(login({
-          token: response.data.token,
+          token: response.data.jwt,
           user: response.data.user
         }));
         

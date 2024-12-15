@@ -79,7 +79,7 @@ function App() {
                 </AppLayout>
               </ProtectedRoute>
             } />
-            <Route path="/auth/redirect" element={
+            <Route path="/instagram/redirect" element={
               <ProtectedRoute>
                 <InstagramRedirect />
               </ProtectedRoute>

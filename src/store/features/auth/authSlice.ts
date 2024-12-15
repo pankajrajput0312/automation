@@ -6,11 +6,25 @@ interface AuthState {
   user: any | null;
 }
 
-const initialState: AuthState = {
-  isAuthenticated: !!localStorage.getItem('token'),
-  token: localStorage.getItem('token'),
-  user: null,
+// Load initial state from localStorage
+const loadState = () => {
+  try {
+    const token = localStorage.getItem('token');
+    return {
+      isAuthenticated: !!token,
+      token: token,
+      user: null, // You can also store/load user data if needed
+    };
+  } catch (err) {
+    return {
+      isAuthenticated: false,
+      token: null,
+      user: null,
+    };
+  }
 };
+
+const initialState: AuthState = loadState();
 
 const authSlice = createSlice({
   name: 'auth',
@@ -20,6 +34,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.user = action.payload.user;
+      // Still store in localStorage for persistence
       localStorage.setItem('token', action.payload.token);
     },
     logout: (state) => {

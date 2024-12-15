@@ -3,95 +3,156 @@ import { Plus, Instagram, Youtube, X, Facebook, Linkedin, Trash2 } from "lucide-
 import { TiktokIcon } from "@/components/icons/TiktokIcon";
 import { cn } from "@/lib/utils";
 import { socialConnect } from "@/services/social-connect";
+import { useState, useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
-interface SocialPlatform {
-  id: string;
-  name: string;
-  icon: React.ReactNode;
-  color: string;
-  isAvailable: boolean;
-  accounts?: {
-    id: string;
-    username: string;
-    avatar?: string;
-  }[];
+interface InstagramAccount {
+  _id: string;
+  accountId: string;
+  username: string;
+  profilePictureUrl: string;
+  followers: number;
+  accountType: string;
+  permissions: string[];
 }
 
-const socialPlatforms: SocialPlatform[] = [
-  {
-    id: 'instagram',
-    name: 'Instagram',
-    icon: <Instagram className="h-5 w-5 text-white" />,
-    color: "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500",
-    isAvailable: true,
-    accounts: [
-      { 
-        id: '1', 
-        username: '@socialhub', 
-        avatar: 'https://ui-avatars.com/api/?name=Social+Hub&background=FF5E5B&color=fff'
-      },
-      { 
-        id: '2', 
-        username: '@socialautomator', 
-        avatar: 'https://ui-avatars.com/api/?name=Social+Automator&background=7C3AED&color=fff'
-      },
-      { 
-        id: '3', 
-        username: '@techbrand', 
-        avatar: 'https://ui-avatars.com/api/?name=Tech+Brand&background=0EA5E9&color=fff'
-      }
-    ]
-  },
-  {
-    id: 'youtube',
-    name: 'YouTube',
-    icon: <Youtube className="h-5 w-5 text-white" />,
-    color: "bg-red-600",
-    isAvailable: false
-  },
-  {
-    id: 'x',
-    name: 'X',
-    icon: <X className="h-5 w-5 text-white" />,
-    color: "bg-black dark:bg-white dark:text-black",
-    isAvailable: false
-  },
-  {
-    id: 'tiktok',
-    name: 'TikTok',
-    icon: <TiktokIcon className="h-5 w-5 text-white dark:text-black" />,
-    color: "bg-[#000000] dark:bg-white",
-    isAvailable: false
-  },
-  {
-    id: 'facebook',
-    name: 'Facebook',
-    icon: <Facebook className="h-5 w-5 text-white" />,
-    color: "bg-[#1877F2]",
-    isAvailable: false
-  },
-  {
-    id: 'linkedin',
-    name: 'LinkedIn',
-    icon: <Linkedin className="h-5 w-5 text-white" />,
-    color: "bg-[#0A66C2]",
-    isAvailable: false
-  }
-];
+interface SocialListResponse {
+  success: boolean;
+  data: {
+    results: {
+      instagram: InstagramAccount[];
+    };
+  };
+  message: string;
+}
 
 export function ConnectSocialPage() {
-  const handleConnect = (platformId: string) => {
-    if (platformId === 'instagram') {
-      socialConnect.instagram();
-    } else {
-      console.log('Connecting to:', platformId);
+  const [accounts, setAccounts] = useState<InstagramAccount[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+  const token = useSelector((state: RootState) => state.auth.token);
+
+  useEffect(() => {
+    fetchSocialAccounts();
+  }, [token]);
+
+  const fetchSocialAccounts = async () => {
+    if (!token) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Authentication token not found"
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch('https://automationapi.getmentore.com/social/list', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data: SocialListResponse = await response.json();
+
+      if (data.success) {
+        setAccounts(data.data.results.instagram || []);
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to fetch connected accounts"
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching accounts:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to fetch connected accounts"
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDisconnect = (platformId: string, accountId: string) => {
-    console.log('Disconnecting:', platformId, accountId);
-    // Implement disconnect logic
+  const handleConnect = (platformId: string) => {
+    if (platformId === 'instagram') {
+      socialConnect.instagram();
+    }
   };
+
+  const handleDisconnect = async (accountId: string) => {
+    if (!token) return;
+
+    try {
+      // Implement disconnect logic here
+      console.log('Disconnecting:', accountId);
+    } catch (error) {
+      console.error('Error disconnecting account:', error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to disconnect account"
+      });
+    }
+  };
+
+  const socialPlatforms = [
+    {
+      id: 'instagram',
+      name: 'Instagram',
+      icon: <Instagram className="h-5 w-5 text-white" />,
+      color: "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500",
+      isAvailable: true,
+      accounts: accounts.map(account => ({
+        id: account._id,
+        username: account.username,
+        avatar: account.profilePictureUrl,
+        followers: account.followers,
+        accountType: account.accountType
+      }))
+    },
+    {
+      id: 'youtube',
+      name: 'YouTube',
+      icon: <Youtube className="h-5 w-5 text-white" />,
+      color: "bg-red-600",
+      isAvailable: false
+    },
+    {
+      id: 'x',
+      name: 'X',
+      icon: <X className="h-5 w-5 text-white" />,
+      color: "bg-black dark:bg-white dark:text-black",
+      isAvailable: false
+    },
+    {
+      id: 'tiktok',
+      name: 'TikTok',
+      icon: <TiktokIcon className="h-5 w-5 text-white dark:text-black" />,
+      color: "bg-[#000000] dark:bg-white",
+      isAvailable: false
+    },
+    {
+      id: 'facebook',
+      name: 'Facebook',
+      icon: <Facebook className="h-5 w-5 text-white" />,
+      color: "bg-[#1877F2]",
+      isAvailable: false
+    },
+    {
+      id: 'linkedin',
+      name: 'LinkedIn',
+      icon: <Linkedin className="h-5 w-5 text-white" />,
+      color: "bg-[#0A66C2]",
+      isAvailable: false
+    }
+  ];
 
   return (
     <div className="container mx-auto py-6 space-y-8">
@@ -147,43 +208,35 @@ export function ConnectSocialPage() {
             </div>
 
             {platform.accounts && platform.accounts.length > 0 && (
-              <div className="space-y-3 mt-6">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-medium text-muted-foreground">Connected Accounts</h4>
-                  {platform.accounts.length > 2 && (
-                    <span className="text-xs text-muted-foreground">
-                      {platform.accounts.length} accounts
-                    </span>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  {platform.accounts.map(account => (
-                    <div 
-                      key={account.id} 
-                      className="flex items-center justify-between bg-accent/30 hover:bg-accent/50 p-3 rounded-lg transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <img 
-                          src={account.avatar}
-                          alt={account.username}
-                          className="w-8 h-8 rounded-full ring-2 ring-background"
-                        />
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium">{account.username}</span>
-                          <span className="text-xs text-muted-foreground">Personal Account</span>
-                        </div>
+              <div className="space-y-2">
+                {platform.accounts.map(account => (
+                  <div 
+                    key={account.id} 
+                    className="flex items-center justify-between bg-accent/30 hover:bg-accent/50 p-3 rounded-lg transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <img 
+                        src={account.avatar}
+                        alt={account.username}
+                        className="w-8 h-8 rounded-full ring-2 ring-background"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">{account.username}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {account.accountType} · {account.followers} followers
+                        </span>
                       </div>
-                      <Button 
-                        variant="ghost" 
-                        size="icon"
-                        className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                        onClick={() => handleDisconnect(platform.id, account.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
                     </div>
-                  ))}
-                </div>
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                      onClick={() => handleDisconnect(account.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
               </div>
             )}
           </div>

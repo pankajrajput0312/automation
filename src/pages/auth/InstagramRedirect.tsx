@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 export function InstagramRedirect() {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
+  const token = useSelector((state: RootState) => state.auth.token);
+
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -27,11 +32,9 @@ export function InstagramRedirect() {
         console.log("fetching", code);
         const response = await fetch('https://automationapi.getmentore.com/social/instagram/create', {
           method: 'POST',
-          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Accept': 'application/json'
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
             token: code
@@ -67,7 +70,7 @@ export function InstagramRedirect() {
     };
 
     handleInstagramRedirect();
-  }, [navigate, location.search, toast]);
+  }, [navigate, location.search, toast, token]);
 
   if (isLoading) {
     return (
